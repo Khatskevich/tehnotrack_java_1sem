@@ -62,7 +62,12 @@ public class AuthorizationService {
         out.println("Enter your password please");
         String password = in.nextLine();
         User user = new User(name, password);
-        userStore.addUser(user);
+        try {
+            userStore.addUser(user);
+        }catch  (Exception e) {
+            out.println(e.toString());
+            return null;
+        }
         return user;
     }
 
