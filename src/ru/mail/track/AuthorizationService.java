@@ -49,17 +49,17 @@ public class AuthorizationService {
     }
 
     User login() {
-        out.println("Enter your name please");
+        out.println("Enter your name please:");
         String name = in.nextLine();
-        out.println("Enter your password please");
+        out.println("Enter your password please:");
         String password = in.nextLine();
         return userStore.getUser(name, password);
     }
 
     User creatUser() {
-        out.println("Enter your name please");
+        out.println("Enter your name please:");
         String name = in.nextLine();
-        out.println("Enter your password please");
+        out.println("Enter your password please:");
         String password = in.nextLine();
         User user = new User(name, password);
         try {
