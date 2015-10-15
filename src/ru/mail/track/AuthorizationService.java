@@ -29,6 +29,7 @@ public class AuthorizationService {
                     out.println("Logging in...");
                     if ((user = login()) != null) {
                         out.println("Success!");
+                        startSession();
                     } else {
                         out.println("Wrong name or password!");
                     }
@@ -37,6 +38,7 @@ public class AuthorizationService {
                     out.println("Registration...");
                     if ((user = creatUser()) != null) {
                         out.println("New user created!");
+                        startSession();
                     } else {
                         out.println("Error occured!");
                     }
@@ -69,6 +71,11 @@ public class AuthorizationService {
             return null;
         }
         return user;
+    }
+
+    void startSession(){
+        MessageService msgService = new MessageService();
+        msgService.runMessageLoop();
     }
 
     boolean isLogin() {
