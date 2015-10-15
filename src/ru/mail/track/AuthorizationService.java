@@ -9,10 +9,10 @@ public class AuthorizationService {
     PrintStream out = System.out;
     Scanner in = new Scanner(System.in);
 
-    private UserStore userStore;
+    private UserStoreStatic userStoreStatic;
 
-    public AuthorizationService(UserStore userStore) {
-        this.userStore = userStore;
+    public AuthorizationService(UserStoreStatic userStore) {
+        this.userStoreStatic = userStore;
     }
 
     void startAuthorization() {
@@ -55,7 +55,7 @@ public class AuthorizationService {
         String name = in.nextLine();
         out.println("Enter your password please:");
         String password = in.nextLine();
-        return userStore.getUser(name, password);
+        return userStoreStatic.getUser(name, password);
     }
 
     User creatUser() {
@@ -65,7 +65,7 @@ public class AuthorizationService {
         String password = in.nextLine();
         User user = new User(name, password);
         try {
-            userStore.addUser(user);
+            userStoreStatic.addUser(user);
         } catch (Exception e) {
             out.println(e.toString());
             return null;

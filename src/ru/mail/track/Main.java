@@ -5,7 +5,7 @@ public class Main {
 
     public static void main(String[] args) {
 
-        UserStore userStore = new UserStore();
+        UserStoreStatic userStore = new UserStoreStatic();
         AuthorizationService authServ = new AuthorizationService(userStore);
 
         authServ.startAuthorization();
