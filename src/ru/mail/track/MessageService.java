@@ -8,9 +8,14 @@ import java.util.Scanner;
  */
 public class MessageService {
 
-    MessageStorage msgStorage = new MessageStorage();
+    MessageStorage msgStorage = new MessageStorageStatic();
     PrintStream out = System.out;
     Scanner in = new Scanner(System.in);
+    User user;
+    private MessageService(){};
+    MessageService( User user){
+        this.user = user;
+    }
 
     private void storeMessage(String message) {
 
@@ -68,10 +73,10 @@ public class MessageService {
     }
     void showHelp(){
         out.println(
-                "\\help - show this message" +
-                        "\\user" +
-                        "\\find" +
-                        "\\history"
+                "\\help - show this message\n" +
+                        "\\user\n" +
+                        "\\find\n" +
+                        "\\history\n"
         );
     }
 }

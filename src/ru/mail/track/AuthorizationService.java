@@ -19,17 +19,17 @@ public class AuthorizationService {
         User user = null;
         if (isLogin()) {
             out.println("You are already loggined in!"); // + user);
-        }else {
+        } else {
             out.println("Do you want to:");
             out.println("1 : Log in ");
             out.println("2 : register ?");
             String answer = in.nextLine();
-            switch (answer){
+            switch (answer) {
                 case "1":
                     out.println("Logging in...");
                     if ((user = login()) != null) {
                         out.println("Success!");
-                        startSession();
+                        startSession(user);
                     } else {
                         out.println("Wrong name or password!");
                     }
@@ -38,7 +38,7 @@ public class AuthorizationService {
                     out.println("Registration...");
                     if ((user = creatUser()) != null) {
                         out.println("New user created!");
-                        startSession();
+                        startSession(user);
                     } else {
                         out.println("Error occured!");
                     }
@@ -66,15 +66,15 @@ public class AuthorizationService {
         User user = new User(name, password);
         try {
             userStore.addUser(user);
-        }catch  (Exception e) {
+        } catch (Exception e) {
             out.println(e.toString());
             return null;
         }
         return user;
     }
 
-    void startSession(){
-        MessageService msgService = new MessageService();
+    void startSession(User user) {
+        MessageService msgService = new MessageService(user);
         msgService.runMessageLoop();
     }
 
