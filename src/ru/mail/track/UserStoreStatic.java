@@ -43,4 +43,8 @@ public class UserStoreStatic implements UserStore{
         }
         return null;
     }
+
+    public void editUser( User user) throws Exception{
+        throw new Exception("This method is unimplemented!");
+    }
 }

@@ -14,4 +14,6 @@ public interface UserStore {
 
     // Получить пользователя по имени и паролю
     User getUser(String name, String pass) ;
+
+    void editUser(User user) throws Exception;
 }
