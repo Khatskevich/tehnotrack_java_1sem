@@ -1,12 +1,13 @@
-package ru.mail.track;
+package ru.mail.track.storage;
 
 
+import javax.jws.soap.SOAPBinding;
 import java.util.ArrayList;
 
 public class UserStoreStatic implements UserStore{
-    ArrayList<User> users = new ArrayList<>();
+    static ArrayList<User> users = new ArrayList<>();
 
-    UserStoreStatic() {
+    public UserStoreStatic() {
         users.add(new User("valera", "23"));
         users.add(new User("vasya", "23"));
         users.add(new User("lera", "23"));
@@ -14,7 +15,8 @@ public class UserStoreStatic implements UserStore{
         users.add(new User("sveta", "23"));
     }
 
-    public boolean isUserExist(String name) {
+    public boolean isUserExist( User user_) {
+        String name = user_.getName();
         for (User user : users) {
             if (user.getName().equals(name)) {
                 return true;
@@ -26,7 +28,7 @@ public class UserStoreStatic implements UserStore{
     // Добавить пользователя в хранилище
     public void addUser(User user) throws Exception {
         if (user != null) {
-            if (!isUserExist(user.getName() )){
+            if (!isUserExist(user)){
                 users.add(user);
             }else{
                 throw new Exception("User exists");
@@ -35,7 +37,9 @@ public class UserStoreStatic implements UserStore{
     }
 
     // Получить пользователя по имени и паролю
-    public User getUser(String name, String pass) {
+    public User getUser(User user_) {
+        String name = user_.getName();
+        String pass = user_.getPass();
         for (User user : users) {
             if (user.getName().equals(name) && user.getPass().equals(pass)) {
                 return user;

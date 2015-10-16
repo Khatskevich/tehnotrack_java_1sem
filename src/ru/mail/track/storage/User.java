@@ -1,4 +1,4 @@
-package ru.mail.track;
+package ru.mail.track.storage;
 
 
 public class User {
