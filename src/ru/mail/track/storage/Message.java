@@ -2,6 +2,8 @@ package ru.mail.track.storage;
 
 public class Message {
     private String text;
+
+    //FIXME(arhangeldim): А где методы для устанвоки времени? Что за значение по-умолчанию?
     private long timestamp = System.currentTimeMillis() / 1000L;
 
     public Message(String text){

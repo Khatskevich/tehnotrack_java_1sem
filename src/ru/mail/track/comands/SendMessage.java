@@ -13,7 +13,6 @@ import java.util.Scanner;
  * Created by lesaha on 16.10.15.
  */
 public class SendMessage implements Command {
-
     @Override
     public Result perform(Session session, Message message) {
         if (!session.isValid() || message == null){

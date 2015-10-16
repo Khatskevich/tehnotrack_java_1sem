@@ -25,6 +25,7 @@ public class CommandFind implements Command {
                 out.println(message.getTimestamp() +":"+ message.getText());
             }
         } catch (Exception e) {
+            //FIXME(arhangeldim): ну в логи вы написали, а пользователю что делать?
             out.println("Error ocured during performing command.");
         }
         return null;

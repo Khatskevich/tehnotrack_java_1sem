@@ -12,6 +12,7 @@ import java.util.Scanner;
  * Created by lesaha on 16.10.15.
  */
 public class LocalSession implements Session{
+    //FIXME(arhangeldim): модификаторы доступа
     Map<String, Command> availableCommands;
     private MessageStorage messageStorage = new MessageStorageLocal();
     private User user = null;
@@ -72,6 +73,7 @@ public class LocalSession implements Session{
     private boolean isItCommand(Message msg) {
         return msg.getText().startsWith("\\");
     }
+
     private Command getCommand(String commandName){
         if (availableCommands.containsKey( commandName )){
             return  availableCommands.get( commandName);

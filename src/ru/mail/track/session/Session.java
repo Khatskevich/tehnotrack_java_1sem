@@ -9,10 +9,14 @@ import java.io.PrintStream;
 import java.util.Map;
 import java.util.Scanner;
 
+//FIXME(arhangeldim): лишний комент
 /**
  * Created by lesaha on 16.10.15.
  */
 public interface Session {
+    //FIXME(arhangeldim): что-то много методов для интерфейса, какое отношение они имеют к сессии?
+    //FIXME(arhangeldim): мне кажется, что многие из сущностей сессии больше относятся к отдельным Командам, и
+    // должны передаваться в конструктор команд
     MessageStorage getMessageStorage();
     void startSession(User user)throws Exception;
     User getUser();

@@ -9,6 +9,7 @@ import java.util.Scanner;
 /**
  * Created by lesaha on 16.10.15.
  */
+//FIXME(arhangeldim): Это можно обработать выше без написания такого странного класса
 public class CommandUndefined implements Command {
     @Override
     public Result perform(Session session, Message message) {

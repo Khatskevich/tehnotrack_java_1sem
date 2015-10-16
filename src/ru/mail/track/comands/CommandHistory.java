@@ -20,6 +20,8 @@ public class CommandHistory implements Command {
         }
         Scanner in = session.getStdIn();
         PrintStream out = session.getStdOut();
+        //FIXME(arhangeldim): Как-то по смыслу странно получается, вроде это сообщение, а вы его как команду
+        // обрабатываете
         String[] arguments = msg.getText().split(" ");
         int number = Integer.MAX_VALUE;
         if (arguments.length > 1) {

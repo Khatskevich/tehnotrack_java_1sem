@@ -1,10 +1,10 @@
 package ru.mail.track.storage;
 
-
-import javax.jws.soap.SOAPBinding;
 import java.util.ArrayList;
 
+//FIXME(arhangeldim): что значит static?
 public class UserStoreStatic implements UserStore{
+    //FIXME(arhangeldim): модификатор доступа?
     static ArrayList<User> users = new ArrayList<>();
 
     public UserStoreStatic() {
@@ -14,6 +14,8 @@ public class UserStoreStatic implements UserStore{
         users.add(new User("tanya", "123"));
         users.add(new User("sveta", "23"));
     }
+
+    //FIXME(arhangeldim): не используем подчеркивание в именах
 
     public boolean isUserExist( User user_) {
         String name = user_.getName();
@@ -30,7 +32,9 @@ public class UserStoreStatic implements UserStore{
         if (user != null) {
             if (!isUserExist(user)){
                 users.add(user);
-            }else{
+            } else {
+                //FIXME(arhangeldim): то есть просто Exception, который пролетит наверх?
+                // И как себя поведет приложение? Что подумает пользователь?
                 throw new Exception("User exists");
             }
         }
