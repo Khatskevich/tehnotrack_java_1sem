@@ -7,9 +7,6 @@ import java.util.Scanner;
 import ru.mail.track.session.Session;
 import ru.mail.track.storage.Message;
 
-/**
- * Created by lesaha on 16.10.15.
- */
 public class CommandHelp implements Command {
     @Override
     public Result perform(Session session, Message msg) {
