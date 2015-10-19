@@ -1,13 +1,23 @@
-package ru.mail.track;
+package ru.mail.track.storage;
 
 
 public class User {
     private String name;
     private String pass;
+    private String nickName;
+
+    public String getNickName() {
+        return nickName;
+    }
+
+    public void setNickName(String nickName) {
+        this.nickName = nickName;
+    }
 
     public User(String name, String pass) {
         this.name = name;
         this.pass = pass;
+        this.nickName = null;
     }
 
     public String getName() {

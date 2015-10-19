@@ -1,14 +1,16 @@
 package ru.mail.track;
 
+//FIXME(arhangeldim): unused imports
+import ru.mail.track.comands.*;
+import ru.mail.track.storage.UserStoreStatic;
+
+import java.util.HashMap;
+import java.util.Map;
 
 public class Main {
 
     public static void main(String[] args) {
-
-        UserStore userStore = new UserStore();
-        AuthorizationService service = new AuthorizationService(userStore);
-
-        service.startAuthorization();
-
+        MessageService messageService = new MessageService( );
+        messageService.runMessageLoop();
     }
 }
