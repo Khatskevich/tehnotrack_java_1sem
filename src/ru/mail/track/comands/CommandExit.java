@@ -7,7 +7,7 @@ import ru.mail.track.storage.Message;
 public class CommandExit implements Command {
     @Override
     public Result perform(Session session, Message msg) {
-        if (!session.isLogined()) {
+        if (session.isLogined()) {
             session.stopSession();
             return null;
         } else {

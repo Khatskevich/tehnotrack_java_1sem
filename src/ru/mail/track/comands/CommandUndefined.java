@@ -1,10 +1,10 @@
 package ru.mail.track.comands;
 
-import ru.mail.track.storage.Message;
 import ru.mail.track.session.Session;
+import ru.mail.track.storage.Message;
 
-import java.io.PrintStream;
-import java.util.Scanner;
+import java.io.BufferedReader;
+import java.io.PrintWriter;
 
 //FIXME(arhangeldim): Это можно обработать выше без написания такого странного класса
 // Мне показалось что обрабатывать разные случаи по разному- это расставление костылей
@@ -16,8 +16,8 @@ public class CommandUndefined implements Command {
         if (session == null) {
             return null;
         }
-        Scanner in = session.getStdIn();
-        PrintStream out = session.getStdOut();
+        BufferedReader in = session.getStdIn();
+        PrintWriter out = new PrintWriter(session.getStdOut(), true);
         out.println("Unrecognised command");
         out.println("Use \\help to get list of available commands");
         return null;

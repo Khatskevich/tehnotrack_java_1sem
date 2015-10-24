@@ -1,11 +1,10 @@
 package ru.mail.track.comands;
 
-import java.io.PrintStream;
-import java.util.Map;
-import java.util.Scanner;
-
 import ru.mail.track.session.Session;
 import ru.mail.track.storage.Message;
+
+import java.io.PrintWriter;
+import java.util.Map;
 
 public class CommandHelp implements Command {
     @Override
@@ -13,8 +12,7 @@ public class CommandHelp implements Command {
         if (session == null) {
             return null;
         }
-        Scanner in = session.getStdIn();
-        PrintStream out = session.getStdOut();
+        PrintWriter out = new PrintWriter(session.getStdOut(), true);
         for (Map.Entry<String, Command> entry : session.getAvailableCommands().entrySet()) {
             out.println(entry.getKey() + " - " + entry.getValue().getDescription());
         }

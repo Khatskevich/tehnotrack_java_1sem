@@ -1,15 +1,13 @@
 package ru.mail.track.comands;
 
-import ru.mail.track.storage.Message;
 import ru.mail.track.session.Session;
+import ru.mail.track.storage.Message;
 import ru.mail.track.storage.User;
 import ru.mail.track.storage.UserStore;
 import ru.mail.track.storage.UserStoreLocal;
 
-import java.io.PrintStream;
-import java.util.Scanner;
-
-import static java.lang.Integer.parseInt;
+import java.io.BufferedReader;
+import java.io.PrintWriter;
 
 public class CommandLogin implements Command {
     @Override
@@ -17,8 +15,8 @@ public class CommandLogin implements Command {
         if (session == null) {
             return null;
         }
-        Scanner in = session.getStdIn();
-        PrintStream out = session.getStdOut();
+        BufferedReader in = session.getStdIn();
+        PrintWriter out = new PrintWriter(session.getStdOut(), true);
         String[] arguments = msg.getText().split(" ");
         if (arguments.length == 3) { // loginning in
             out.println("Logging in...");
@@ -29,14 +27,15 @@ public class CommandLogin implements Command {
                 out.println("Can not log in." + e.getMessage());
             }
         } else if (arguments.length == 1) { // registration
-            out.println("Registration...");
-            UserStore userStorage = new UserStoreLocal();
-            out.println("Enter your name please:");
-            String name = in.nextLine();
-            out.println("Enter your password please:");
-            String password = in.nextLine();
-            User user = new User(name, password);
             try {
+                out.println("Registration...");
+                UserStore userStorage = new UserStoreLocal();
+                out.println("Enter your name please:");
+                String name = in.readLine();
+                out.println("Enter your password please:");
+                String password = in.readLine();
+                User user = new User(name, password);
+
                 userStorage.addUser(user);
                 out.println("Success!  Now you can log in");
                 out.println("Username = " + name);

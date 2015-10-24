@@ -3,7 +3,7 @@ package ru.mail.track.comands;
 import ru.mail.track.storage.Message;
 import ru.mail.track.session.Session;
 
-import java.io.PrintStream;
+import java.io.*;
 import java.util.Scanner;
 
 import static java.lang.Integer.parseInt;
@@ -15,8 +15,7 @@ public class CommandHistory implements Command {
         if (!session.isLogined()) {
             return null;
         }
-        Scanner in = session.getStdIn();
-        PrintStream out = session.getStdOut();
+        PrintWriter out = new PrintWriter(session.getStdOut(), true);
         //FIXME(arhangeldim): Как-то по смыслу странно получается, вроде это сообщение, а вы его как команду
         // обрабатываете
         // Мне кажется, что так достигается максимальная прозрачность кода.
@@ -33,7 +32,6 @@ public class CommandHistory implements Command {
                 out.println(message.getTimestamp() + ":" + message.getText());
             }
         } catch (Exception e) {
-            out.println("Error ocured during performing command.");
         }
         return null;
     }

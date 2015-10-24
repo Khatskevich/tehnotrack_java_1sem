@@ -1,10 +1,9 @@
 package ru.mail.track.comands;
 
-import ru.mail.track.storage.Message;
 import ru.mail.track.session.Session;
+import ru.mail.track.storage.Message;
 
-import java.io.PrintStream;
-import java.util.Scanner;
+import java.io.PrintWriter;
 
 public class CommandFind implements Command {
     @Override
@@ -12,8 +11,7 @@ public class CommandFind implements Command {
         if (!session.isLogined()) {
             return null;
         }
-        Scanner in = session.getStdIn();
-        PrintStream out = session.getStdOut();
+        PrintWriter out = new PrintWriter(session.getStdOut(), true);
         int number = Integer.MAX_VALUE;
         String regex = msg.getText().replaceFirst("\\\\find ", "");
         out.println("Looking for " + "\"" + regex + "\"");

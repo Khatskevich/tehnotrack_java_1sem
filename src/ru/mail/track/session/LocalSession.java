@@ -3,24 +3,23 @@ package ru.mail.track.session;
 import ru.mail.track.comands.*;
 import ru.mail.track.storage.*;
 
-import java.io.PrintStream;
+import java.io.BufferedReader;
+import java.io.OutputStream;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.Scanner;
 
 public class LocalSession implements Session {
     private Map<String, Command> availableCommands;
     private MessageStorage messageStorage = new MessageStorageLocal();
     private User user = null;
-    public PrintStream out = System.out;
-    public Scanner in = new Scanner(System.in);
+    public OutputStream out;
+    public BufferedReader in;
 
     public Map<String, Command> getAvailableCommands() {
         return availableCommands;
     }
 
-    public LocalSession() {
-
+    private void fillAvailableCommandsStructure() {
         availableCommands = new HashMap<>();
         availableCommands.put("\\find", new CommandFind());
         availableCommands.put("\\help", new CommandHelp());
@@ -29,8 +28,19 @@ public class LocalSession implements Session {
         availableCommands.put("\\user", new CommandUser());
         availableCommands.put("\\undefined", new CommandUndefined());
         availableCommands.put("\\exit", new CommandExit());
-
     }
+
+    public LocalSession() {
+        fillAvailableCommandsStructure();
+    }
+
+    public LocalSession(OutputStream out,
+                        BufferedReader in) {
+        fillAvailableCommandsStructure();
+        this.in = in;
+        this.out = out;
+    }
+
 
     @Override
     public MessageStorage getMessageStorage() {
@@ -59,12 +69,12 @@ public class LocalSession implements Session {
     }
 
     @Override
-    public PrintStream getStdOut() {
+    public OutputStream getStdOut() {
         return out;
     }
 
     @Override
-    public Scanner getStdIn() {
+    public BufferedReader getStdIn() {
         return in;
     }
 

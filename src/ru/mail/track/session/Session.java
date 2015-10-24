@@ -6,7 +6,7 @@ import ru.mail.track.storage.Message;
 import ru.mail.track.storage.MessageStorage;
 import ru.mail.track.storage.User;
 
-import java.io.PrintStream;
+import java.io.*;
 import java.util.Map;
 import java.util.Scanner;
 
@@ -29,9 +29,9 @@ public interface Session {
 
     User getUser();
 
-    PrintStream getStdOut();
+    OutputStream getStdOut();
 
-    Scanner getStdIn();
+    BufferedReader getStdIn();
 
     boolean isLogined();
 
