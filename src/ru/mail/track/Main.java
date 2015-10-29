@@ -29,7 +29,7 @@ public class Main {
         }
         for (ListenerProcess thread : threads) {
             try {
-                thread.wait();
+                thread.join();
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }
