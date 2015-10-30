@@ -1,25 +1,19 @@
 package ru.mail.track.comands;
 
-import ru.mail.track.session.Session;
-import ru.mail.track.storage.Message;
-
-import java.io.BufferedReader;
-import java.io.PrintWriter;
+import ru.mail.track.connection.ConnectionHandler;
 
 //FIXME(arhangeldim): Это можно обработать выше без написания такого странного класса
 // Мне показалось что обрабатывать разные случаи по разному- это расставление костылей
 // мне хотелось унифицировать жизненный цикл вводимого пользователем, чтобы
 // сделать программу прозрачной для дальнейших изменений
-public class CommandUndefined implements Command {
+public class UserCommandUndefined implements UserBaseCommand {
     @Override
-    public Result perform(Session session, Message message) {
-        if (session == null) {
+    public Result perform(ConnectionHandler connectionHandler, CommandsData command) {
+        if (connectionHandler == null) {
             return null;
         }
-        BufferedReader in = session.getStdIn();
-        PrintWriter out = new PrintWriter(session.getStdOut(), true);
-        out.println("Unrecognised command");
-        out.println("Use \\help to get list of available commands");
+        System.out.println("Unrecognised command");
+        System.out.println("Use \\help to get list of available commands");
         return null;
     }
 

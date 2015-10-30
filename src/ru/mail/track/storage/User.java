@@ -2,9 +2,29 @@ package ru.mail.track.storage;
 
 
 public class User {
+    private long userId;
     private String name;
     private String pass;
     private String nickName;
+    public User(String name, String pass) {
+        this.name = name;
+        this.pass = pass;
+        this.nickName = null;
+    }
+    public User(String name, String pass, long userId) {
+        this.name = name;
+        this.pass = pass;
+        this.nickName = null;
+        this.userId = userId;
+    }
+
+    public long getUserId() {
+        return userId;
+    }
+
+    public void setUserId(long userId) {
+        this.userId = userId;
+    }
 
     public String getNickName() {
         return nickName;
@@ -12,12 +32,6 @@ public class User {
 
     public void setNickName(String nickName) {
         this.nickName = nickName;
-    }
-
-    public User(String name, String pass) {
-        this.name = name;
-        this.pass = pass;
-        this.nickName = null;
     }
 
     public String getName() {

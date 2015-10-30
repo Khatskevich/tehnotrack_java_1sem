@@ -1,18 +1,19 @@
 package ru.mail.track.storage;
 
 import java.util.ArrayList;
+import java.util.concurrent.atomic.AtomicLong;
 
 //FIXME(arhangeldim): что значит static?
 //что этот класс работает локально.
 public class UserStoreLocal implements UserStore {
     public static ArrayList<User> users = new ArrayList<>();
-
+    private static AtomicLong internalCounter = new AtomicLong(1);
     public UserStoreLocal() {
-        users.add(new User("valera", "23"));
-        users.add(new User("vasya", "23"));
-        users.add(new User("lera", "23"));
-        users.add(new User("tanya", "123"));
-        users.add(new User("sveta", "23"));
+        users.add(new User("valera", "23", 100));
+        users.add(new User("vasya", "23", 101));
+        users.add(new User("lera", "23", 102));
+        users.add(new User("tanya", "123", 103));
+        users.add(new User("sveta", "23", 104));
     }
 
     public boolean isUserExist(User userForCheck) {
@@ -26,18 +27,17 @@ public class UserStoreLocal implements UserStore {
     }
 
     // Добавить пользователя в хранилище
-    public void addUser(User user) throws Exception {
+    public User addUser(User user) throws Exception {
         if (user != null) {
             if (!isUserExist(user)) {
+                user.setUserId(internalCounter.incrementAndGet());
                 users.add(user);
+                return  user;
             } else {
-                //FIXME(arhangeldim): то есть просто Exception, который пролетит наверх?
-                // И как себя поведет приложение? Что подумает пользователь?
-                // Я не знаю как по другому.
-                // Я предполагал, что это вверху обработается.
-                throw new Exception("User exists");
+                return null;
             }
         }
+        return null;
     }
 
     // Получить пользователя по имени и паролю
@@ -52,7 +52,23 @@ public class UserStoreLocal implements UserStore {
         return null;
     }
 
-    public void update(User user) throws Exception {
-        throw new Exception("This method is unimplemented!");
+    public User update(User newUser) throws Exception {
+        for (User user : users) {
+            if (user.getUserId() == newUser.getUserId() ) {
+                users.remove(user);
+                users.add(newUser);
+                return newUser;
+            }
+        }
+        return null;
+    }
+
+    public User getUserWithId(Long id) {
+        for (User user : users) {
+            if (user.getUserId() == id) {
+                return user;
+            }
+        }
+        return null;
     }
 }

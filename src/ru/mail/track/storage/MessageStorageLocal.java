@@ -7,7 +7,7 @@ import java.util.LinkedList;
 public class MessageStorageLocal implements MessageStorage {
     //Здесь линкед лист - для безопастной и более быстрой работы с итераторами при поиске с конца.
     //Если появятся другие команды ( не история и поиск) - то возможно придется менять.
-    private LinkedList<Message> messages = new LinkedList<>();
+    private static LinkedList<Message> messages = new LinkedList<>();
 
     @Override
     public ArrayList<Message> getLastMessagesWithRegex(int num, String regex) throws Exception {
