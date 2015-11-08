@@ -10,7 +10,9 @@ import ru.mail.track.control.InfoMessage;
 import ru.mail.track.storage.ControlMessage;
 import ru.mail.track.storage.Message;
 
-import java.io.*;
+import java.io.IOException;
+import java.io.PrintStream;
+import java.io.Serializable;
 import java.net.Socket;
 import java.util.Scanner;
 import java.util.logging.Level;
@@ -25,7 +27,7 @@ public class ThreadedClient implements MessageListener {
     public static final int PORT = 19000;
     public static final String HOST = "localhost";
     PrintStream out = System.out;
-    Scanner in = new Scanner( System.in);
+    Scanner in = new Scanner(System.in);
     Thread socketHandler = null;
 
     ConnectionHandler handler;
@@ -50,20 +52,20 @@ public class ThreadedClient implements MessageListener {
     @Override
     public void onMessage(Serializable object) {
         try {
-            if ( object instanceof Message ){
+            if (object instanceof Message) {
                 Message msg = (Message) object;
                 System.out.println("---------------");
                 System.out.println("got message:");
-                System.out.println("senderId = " +msg.getSenderId() + "\nchatId = "+ msg.getDialogId()+"\nText:\n" + msg.getText());
+                System.out.println("senderId = " + msg.getSenderId() + "\nchatId = " + msg.getDialogId() + "\nText:\n" + msg.getText());
                 System.out.println("---------------");
-            } else if ( object instanceof InfoMessage){
+            } else if (object instanceof InfoMessage) {
                 InfoMessage msg = (InfoMessage) object;
                 System.out.println("---------------");
                 System.out.println("got infoMessage:\n" + msg);
                 System.out.println("---------------");
-            }else if (object instanceof ControlMessage) {
+            } else if (object instanceof ControlMessage) {
                 ControlMessage msg = (ControlMessage) object;
-                if ( msg.status == msg.LASTMESSAGE){
+                if (msg.status == msg.LASTMESSAGE) {
                     //socketHandler.interrupt();
                     System.out.println("Ok");
                 }
@@ -88,8 +90,8 @@ public class ThreadedClient implements MessageListener {
         return null;
     }
 
-    public boolean isItCommand(String input){
-        return  ( input.startsWith("\\"));
+    public boolean isItCommand(String input) {
+        return (input.startsWith("\\"));
     }
 
     public void messageLoop() throws Exception {
@@ -99,7 +101,7 @@ public class ThreadedClient implements MessageListener {
             if (input == null) {
                 break;
             }
-            if ( isItCommand( input )) {
+            if (isItCommand(input)) {
                 CommandsData commandsData = new CommandsData();
                 commandsData.setText(input);
                 UserBaseCommand command = UserCommandsDecoder.getCommand(commandsData);

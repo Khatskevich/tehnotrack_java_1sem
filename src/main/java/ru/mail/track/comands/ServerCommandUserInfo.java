@@ -23,12 +23,13 @@ public class ServerCommandUserInfo implements ServerBaseCommand {
             UserStore userStorage = connection.getThreadedServer().getUserStore();
             User user = userStorage.getUserWithId(userId);
             String result = "";
-            result += "Username  = "+ user.getName() + "\n";
-            result += "User id   = "+ user.getUserId() + "\n";
-            result += "User nick = "+ user.getNickName();
+            result += "Username  = " + user.getName() + "\n";
+            result += "User id   = " + user.getUserId() + "\n";
+            result += "User nick = " + user.getNickName();
             connection.getConnectionHandler().send(new InfoMessage(result));
 
         } catch (Exception e) {
+            e.printStackTrace();
         }
         return null;
     }

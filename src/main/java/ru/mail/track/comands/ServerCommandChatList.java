@@ -2,8 +2,6 @@ package ru.mail.track.comands;
 
 import ru.mail.track.connection.SingleUserConnection;
 import ru.mail.track.control.InfoMessage;
-import ru.mail.track.storage.User;
-import ru.mail.track.storage.UserStore;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -22,10 +20,10 @@ public class ServerCommandChatList implements ServerBaseCommand {
             PreparedStatement stmt = c.prepareStatement(sql);
             stmt.setLong(1, connection.getUserId());
             ResultSet rs = stmt.executeQuery();
-            StringBuffer result = new StringBuffer();
+            StringBuilder result = new StringBuilder();
             result.append("chats:");
             while (rs.next()) {
-                result.append(" "+rs.getLong("chatid"));
+                result.append(" ").append(rs.getLong("chatid"));
             }
             connection.getConnectionHandler().send(new InfoMessage(result.toString()));
             rs.close();

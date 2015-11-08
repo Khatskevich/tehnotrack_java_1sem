@@ -6,7 +6,10 @@ import ru.mail.track.connection.SingleUserConnection;
 import ru.mail.track.connection.SocketConnectionHandler;
 import ru.mail.track.control.ActiveConnections;
 import ru.mail.track.control.Dialogs;
-import ru.mail.track.storage.*;
+import ru.mail.track.storage.DBMessageStorage;
+import ru.mail.track.storage.DBUserStorage;
+import ru.mail.track.storage.MessageStorage;
+import ru.mail.track.storage.UserStore;
 
 import java.io.IOException;
 import java.net.ServerSocket;
@@ -55,8 +58,8 @@ public class ThreadedServer {
         try {
             Class.forName("org.postgresql.Driver");
             connectionPool = new ComboPooledDataSource();
-            connectionPool.setDriverClass( "org.postgresql.Driver" ); //loads the jdbc driver
-            connectionPool.setJdbcUrl( "jdbc:postgresql://178.62.140.149:5432/eivae2iz" );
+            connectionPool.setDriverClass("org.postgresql.Driver"); //loads the jdbc driver
+            connectionPool.setJdbcUrl("jdbc:postgresql://178.62.140.149:5432/eivae2iz");
             connectionPool.setUser("senthil");
             connectionPool.setPassword("ubuntu");
             // the settings below are optional -- c3p0 can work with defaults
@@ -68,7 +71,7 @@ public class ThreadedServer {
         }
         userStore = new DBUserStorage(this);
         messageStorage = new DBMessageStorage(this);
-        dialogs = new Dialogs( this, messageStorage, activeConnections);
+        dialogs = new Dialogs(this, messageStorage, activeConnections);
         try {
             sSocket = new ServerSocket(PORT);
             sSocket.setReuseAddress(true);

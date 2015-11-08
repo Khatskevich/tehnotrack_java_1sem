@@ -24,9 +24,10 @@ public class ServerCommandLogin implements ServerBaseCommand {
                         connection.setUserId(user.getUserId());
                         connection.getActiveConnections().addToLogined(user.getUserId(), connection);
                     }
-                    connection.getConnectionHandler().send(new InfoMessage("Now you loggined as " + user.getName() + " user ID = "+ user.getUserId()));
+                    connection.getConnectionHandler().send(new InfoMessage("Now you loggined as " + user.getName() + " user ID = " + user.getUserId()));
                 }
             } catch (Exception e) {
+                e.printStackTrace();
             }
         }
         return null;

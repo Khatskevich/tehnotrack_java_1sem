@@ -2,13 +2,13 @@ package ru.mail.track.storage;
 
 import ru.mail.track.ThreadedServer;
 
-import java.sql.*;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Collections;
 
-/**
- * Created by lesaha on 08.11.15.
- */
 public class DBMessageStorage implements MessageStorage {
     private ThreadedServer threadedServer;
 
@@ -33,7 +33,7 @@ public class DBMessageStorage implements MessageStorage {
                     tmpMsg.setSenderId(rs.getLong("senderId"));
                     tmpMsg.setTimestamp(rs.getLong("time"));
                     result.add(tmpMsg);
-                    if ( result.size() >= num){
+                    if (result.size() >= num) {
                         break;
                     }
                 }
@@ -76,7 +76,7 @@ public class DBMessageStorage implements MessageStorage {
             stmt.executeUpdate();
             stmt.close();
             c.close();
-        } catch (SQLException e){
+        } catch (SQLException e) {
             System.out.println(e);
             throw new RuntimeException();
         } catch (Exception e) {

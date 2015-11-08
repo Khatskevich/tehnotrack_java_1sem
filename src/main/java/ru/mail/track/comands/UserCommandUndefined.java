@@ -2,10 +2,6 @@ package ru.mail.track.comands;
 
 import ru.mail.track.connection.ConnectionHandler;
 
-//FIXME(arhangeldim): Это можно обработать выше без написания такого странного класса
-// Мне показалось что обрабатывать разные случаи по разному- это расставление костылей
-// мне хотелось унифицировать жизненный цикл вводимого пользователем, чтобы
-// сделать программу прозрачной для дальнейших изменений
 public class UserCommandUndefined implements UserBaseCommand {
     @Override
     public Result perform(ConnectionHandler connectionHandler, CommandsData command) {

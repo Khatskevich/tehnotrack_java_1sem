@@ -13,10 +13,10 @@ public class ServerCommandChatHistory implements ServerBaseCommand {
         try {
             String[] arguments = command.getText().split(" ");
             int number = Integer.MAX_VALUE;
-            long chatId = 0l;
+            long chatId;
             if (arguments.length == 2) {
                 chatId = parseInt(arguments[1]);
-            }else if (arguments.length == 3) {
+            } else if (arguments.length == 3) {
                 number = parseInt(arguments[2]);
                 chatId = parseInt(arguments[1]);
             } else {
@@ -26,11 +26,12 @@ public class ServerCommandChatHistory implements ServerBaseCommand {
             StringBuilder result = new StringBuilder();
 
             MessageStorage msgStore = connection.getThreadedServer().getMessageStorage();
-            for (Message message : msgStore.getLastMessagesWithRegex(number, chatId , null)) {
-                result.append(message.getTimestamp() + ":" + message.getText() + "\n");
+            for (Message message : msgStore.getLastMessagesWithRegex(number, chatId, null)) {
+                result.append(message.getTimestamp()).append(":").append(message.getText()).append("\n");
             }
             connection.getConnectionHandler().send(new InfoMessage(result.toString()));
         } catch (Exception e) {
+            e.printStackTrace();
         }
         return null;
     }

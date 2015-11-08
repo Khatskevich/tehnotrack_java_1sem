@@ -9,8 +9,6 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
-import java.util.Collection;
-import java.util.Collections;
 import java.util.List;
 
 public class Dialogs {
@@ -18,8 +16,10 @@ public class Dialogs {
     private ActiveConnections activeConnections;
     private ThreadedServer threadedServer;
 
-    private Dialogs(){}
-    public Dialogs(ThreadedServer threadedServer, MessageStorage msgStorage, ActiveConnections activeConnections){
+    private Dialogs() {
+    }
+
+    public Dialogs(ThreadedServer threadedServer, MessageStorage msgStorage, ActiveConnections activeConnections) {
         this.msgStorage = msgStorage;
         this.activeConnections = activeConnections;
         this.threadedServer = threadedServer;
@@ -48,7 +48,7 @@ public class Dialogs {
             ResultSet rs = stmt.executeQuery();
             while (rs.next()) {
                 long participant = rs.getLong("senderid");
-                if ( participant != msg.getSenderId() ) {
+                if (participant != msg.getSenderId()) {
                     activeConnections.sendSerialisableToUser(participant, msg);
                 }
             }

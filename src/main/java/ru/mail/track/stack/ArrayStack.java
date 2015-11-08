@@ -32,7 +32,7 @@ public class ArrayStack<E> implements Stack<E> {
 
     @Override
     public E pop() throws StackException {
-        if ( size == 0){
+        if (size == 0) {
             throw new StackException("Stack is empty!");
         }
         return (E) elements[size--];
@@ -40,9 +40,9 @@ public class ArrayStack<E> implements Stack<E> {
 
     @Override
     public E peek() {
-        try{
+        try {
             return this.pop();
-        }catch (StackException e) {
+        } catch (StackException e) {
             return null;
         }
     }
@@ -54,12 +54,12 @@ public class ArrayStack<E> implements Stack<E> {
 
     @Override
     public boolean isEmpty() {
-        return size==0;
+        return size == 0;
     }
 
     @Override
     public void pushAll(Collection<E> src) throws StackException {
-        for ( E element : src){
+        for (E element : src) {
             this.push(element);
         }
     }
@@ -67,7 +67,7 @@ public class ArrayStack<E> implements Stack<E> {
     @Override
     public void popAll(Collection<E> dst) throws StackException {
         E tmp;
-        while( (tmp = peek())!=null ){
+        while ((tmp = peek()) != null) {
             dst.add(tmp);
         }
     }

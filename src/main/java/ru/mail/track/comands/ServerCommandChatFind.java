@@ -11,8 +11,8 @@ public class ServerCommandChatFind implements ServerBaseCommand {
         try {
             StringBuilder result = new StringBuilder();
             int number = Integer.MAX_VALUE;
-            String regex = command.getText(). replaceFirst("^\\\\find \\d+\\s", "");
-            Long chatId = 0l;
+            String regex = command.getText().replaceFirst("^\\\\find \\d+\\s", "");
+            Long chatId;
             String[] args = command.getText().split(" ");
             if (args.length > 1) {
                 chatId = Long.decode(args[1]);
@@ -21,11 +21,11 @@ public class ServerCommandChatFind implements ServerBaseCommand {
                 return null;
             }
 
-            result.append("Looking for " + "\"" + regex + "\"\n");
+            result.append("Looking for " + "\"").append(regex).append("\"\n");
 
             MessageStorage msgStore = connection.getThreadedServer().getMessageStorage();
             for (Message message : msgStore.getLastMessagesWithRegex(number, chatId, regex)) {
-                result.append(message.getTimestamp() + ":" + message.getText()+"\n");
+                result.append(message.getTimestamp()).append(":").append(message.getText()).append("\n");
             }
             connection.getConnectionHandler().send(new InfoMessage(result.toString()));
         } catch (Exception e) {

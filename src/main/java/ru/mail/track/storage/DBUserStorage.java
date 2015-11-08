@@ -2,11 +2,11 @@ package ru.mail.track.storage;
 
 import ru.mail.track.ThreadedServer;
 
-import java.sql.*;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
 
-/**
- * Created by lesaha on 08.11.15.
- */
 public class DBUserStorage implements UserStore {
     private ThreadedServer threadedServer;
 
@@ -19,7 +19,7 @@ public class DBUserStorage implements UserStore {
         try {
             Connection c = threadedServer.getConnectionPool().getConnection();
             boolean result = false;
-            String sql ="SELECT COUNT* FROM USERS WHERE NAME=? ;" ;//'" + user.getName() + "','" + user.getName() + "','" + user.getPass() + "');";
+            String sql = "SELECT COUNT* FROM USERS WHERE NAME=? ;";//'" + user.getName() + "','" + user.getName() + "','" + user.getPass() + "');";
             PreparedStatement stmt = c.prepareStatement(sql);
             stmt.setString(1, user.getName());
             ResultSet rs = stmt.executeQuery();
@@ -60,8 +60,8 @@ public class DBUserStorage implements UserStore {
             stmt.close();
             c.close();*/
 
-        } catch (SQLException e){
-            if ( e.getSQLState().equals("23505")){//duplicate name
+        } catch (SQLException e) {
+            if (e.getSQLState().equals("23505")) {//duplicate name
                 return null;
             }
             throw new RuntimeException();
@@ -76,7 +76,7 @@ public class DBUserStorage implements UserStore {
         try {
             Connection c = threadedServer.getConnectionPool().getConnection();
             User newUser = null;
-            String sql ="SELECT * FROM USERS WHERE NAME=? AND PASS=?;";
+            String sql = "SELECT * FROM USERS WHERE NAME=? AND PASS=?;";
             PreparedStatement stmt = c.prepareStatement(sql);
             stmt.setString(1, user.getName());
             stmt.setString(2, user.getPass());
@@ -99,7 +99,7 @@ public class DBUserStorage implements UserStore {
     public User update(User user) {
         try {
             Connection c = threadedServer.getConnectionPool().getConnection();
-            String sql ="UPDATE USERS SET NAME=?, NICK=?, PASS=? WHERE ID=?;";
+            String sql = "UPDATE USERS SET NAME=?, NICK=?, PASS=? WHERE ID=?;";
             PreparedStatement stmt = c.prepareStatement(sql);
             stmt.setString(1, user.getName());
             stmt.setString(2, user.getNickName());
@@ -119,7 +119,7 @@ public class DBUserStorage implements UserStore {
         try {
             Connection c = threadedServer.getConnectionPool().getConnection();
             User newUser = null;
-            String sql ="SELECT * FROM USERS WHERE ID=?;";
+            String sql = "SELECT * FROM USERS WHERE ID=?;";
             PreparedStatement stmt = c.prepareStatement(sql);
             stmt.setLong(1, id);
             ResultSet rs = stmt.executeQuery();

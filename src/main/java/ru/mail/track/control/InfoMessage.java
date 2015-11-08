@@ -4,11 +4,13 @@ import java.io.Serializable;
 
 public class InfoMessage implements Serializable {
     String text;
-    public InfoMessage(String text){
+
+    public InfoMessage(String text) {
         this.text = text;
     }
+
     @Override
-    public String toString(){
+    public String toString() {
         return text;
     }
 }

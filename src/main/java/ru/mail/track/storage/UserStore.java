@@ -12,5 +12,5 @@ public interface UserStore {
 
     User update(User user);
 
-    User getUserWithId( long id);
+    User getUserWithId(long id);
 }

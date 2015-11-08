@@ -1,20 +1,17 @@
 package ru.mail.track.comands;
 
 import ru.mail.track.connection.ConnectionHandler;
-import ru.mail.track.storage.Message;
 
 import java.io.IOException;
-
-import static java.lang.Integer.parseInt;
 
 public class UserCommandChatHistory implements UserBaseCommand {
 
     @Override
     public Result perform(ConnectionHandler connectionHandler, CommandsData command) {
         try {
-                connectionHandler.send(command);
+            connectionHandler.send(command);
         } catch (IOException e) {
-                e.printStackTrace();
+            e.printStackTrace();
         }
         return null;
     }

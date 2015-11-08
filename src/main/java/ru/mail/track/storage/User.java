@@ -6,11 +6,13 @@ public class User {
     private String name;
     private String pass;
     private String nickName;
+
     public User(String name, String pass) {
         this.name = name;
         this.pass = pass;
         this.nickName = null;
     }
+
     public User(String name, String pass, long userId) {
         this.name = name;
         this.pass = pass;

@@ -5,7 +5,7 @@ import ru.mail.track.control.InfoMessage;
 import ru.mail.track.storage.User;
 import ru.mail.track.storage.UserStore;
 
-public class ServerCommandRegister implements ServerBaseCommand{
+public class ServerCommandRegister implements ServerBaseCommand {
     @Override
     public Result perform(SingleUserConnection connection, CommandsData command) {
         String[] arguments = command.getText().split(" ");
@@ -18,11 +18,12 @@ public class ServerCommandRegister implements ServerBaseCommand{
                 User user = new User(name, password);
                 userStorage.addUser(user);
                 connection.getConnectionHandler().send(new InfoMessage(
-                                        "Success!  Now you can log in\n"+
-                                        "Username = " + name+"\n"+
-                                        "Password = " + password+""
+                        "Success!  Now you can log in\n" +
+                                "Username = " + name + "\n" +
+                                "Password = " + password + ""
                 ));
             } catch (Exception e) {
+                e.printStackTrace();
             }
         }
         return null;

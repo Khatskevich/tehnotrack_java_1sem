@@ -1,8 +1,5 @@
 package ru.mail.track.stack;
 
-import java.util.ArrayList;
-import java.util.List;
-
 /**
  *
  */
@@ -12,7 +9,6 @@ public class Arrays {
 
 //        List<String> strs = new ArrayList<>();
 //        List<Object> objs = strs;
-
 
 
     }

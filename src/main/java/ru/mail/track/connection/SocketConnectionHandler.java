@@ -1,6 +1,5 @@
 package ru.mail.track.connection;
 
-import ru.mail.track.ThreadedClient;
 import ru.mail.track.storage.ControlMessage;
 
 import java.io.*;
@@ -34,8 +33,6 @@ public class SocketConnectionHandler implements ConnectionHandler {
 
     @Override
     public void send(Serializable object) throws IOException {
-        // TODO: здесь должен быть встроен алгоритм кодирования/декодирования сообщений
-        // то есть требуется описать протокол
         LOGGER.info("Sending message");
         ByteArrayOutputStream serializatorBAIS = new ByteArrayOutputStream();
         (new ObjectOutputStream(serializatorBAIS)).writeObject(object);
@@ -78,11 +75,11 @@ public class SocketConnectionHandler implements ConnectionHandler {
                 notifyListeners((Serializable) disearilizatorOI.readObject());
 /*                Object obj = in.readObject();
                 notifyListeners((Serializable) obj);*/
-            } catch (EOFException e){
+            } catch (EOFException e) {
                 Thread.currentThread().interrupt();
                 ControlMessage msg = new ControlMessage();
                 msg.status = msg.LASTMESSAGE;
-                notifyListeners((Serializable) msg);
+                notifyListeners(msg);
                 System.exit(0);
                 //return;
             } catch (Exception e) {

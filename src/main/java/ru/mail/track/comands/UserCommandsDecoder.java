@@ -4,8 +4,8 @@ import java.util.HashMap;
 
 public class UserCommandsDecoder {
     static final HashMap<String, UserBaseCommand> availableCommands;
-    static
-    {
+
+    static {
         availableCommands = new HashMap<>();
         availableCommands.put("\\chat_find", new UserCommandChatFind());
         availableCommands.put("\\help", new UserCommandHelp());

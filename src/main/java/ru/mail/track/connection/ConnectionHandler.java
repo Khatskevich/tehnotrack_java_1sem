@@ -8,7 +8,7 @@ import java.io.Serializable;
  */
 public interface ConnectionHandler extends Runnable {
 
-    void send( Serializable object) throws IOException;
+    void send(Serializable object) throws IOException;
 
     void addListener(MessageListener listener);
 

@@ -27,6 +27,7 @@ public class SingleUserConnection implements MessageListener {
     }
 
     private ThreadedServer threadedServer = null;
+
     public SingleUserConnection(ConnectionHandler connectionHandler, ThreadedServer threadedServer, Dialogs dialogs, ActiveConnections activeConnections, MessageStorage messageStorage, long connectionId, Logger LOGGER) {
         this.dialogs = dialogs;
         this.activeConnections = activeConnections;
@@ -63,7 +64,7 @@ public class SingleUserConnection implements MessageListener {
             if (object instanceof Message) {
                 Message msg = (Message) object;
                 LOGGER.info("got message: " + msg.getText());
-                if ( userId !=0) {
+                if (userId != 0) {
                     msg.setSenderId(userId);
                     dialogs.putMessageToDialog(msg);
                 }
@@ -73,10 +74,10 @@ public class SingleUserConnection implements MessageListener {
                 cmd.perform(this, cmdData);
             } else if (object instanceof ControlMessage) {
                 ControlMessage msg = (ControlMessage) object;
-                if ( msg.status == msg.LASTMESSAGE){
-                    if ( getUserId()==0){
+                if (msg.status == msg.LASTMESSAGE) {
+                    if (getUserId() == 0) {
                         activeConnections.deleteFromLogined(getUserId());
-                    }else {
+                    } else {
                         activeConnections.deleteFromUnlogined(connectionId);
                     }
                 }
