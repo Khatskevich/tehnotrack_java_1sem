@@ -1,21 +1,25 @@
 package ru.mail.track.comands;
 
 import ru.mail.track.connection.ConnectionHandler;
+import ru.mail.track.storage.Message;
 
 import java.io.IOException;
 
-public class UserCommandUser implements UserBaseCommand {
+import static java.lang.Integer.parseInt;
+
+public class UserCommandChatHistory implements UserBaseCommand {
+
     @Override
     public Result perform(ConnectionHandler connectionHandler, CommandsData command) {
         try {
-            connectionHandler.send(command);
+                connectionHandler.send(command);
         } catch (IOException e) {
-            e.printStackTrace();
+                e.printStackTrace();
         }
         return null;
     }
 
     public String getDescription() {
-        return "change user nick name";
+        return "return last messages usage \\chat_history chatId [count]";
     }
 }

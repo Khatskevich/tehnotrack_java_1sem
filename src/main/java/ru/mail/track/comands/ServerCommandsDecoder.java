@@ -7,15 +7,17 @@ public class ServerCommandsDecoder {
     static
     {
         availableCommands = new HashMap<>();
-        availableCommands.put("\\find", new ServerCommandFind());
-        // temprorary unavailable command
-        //availableCommands.put("\\help", new ServerCommandHelp());
-        availableCommands.put("\\history", new ServerCommandHistory());
+        availableCommands.put("\\chat_find", new ServerCommandChatFind());
+        availableCommands.put("\\chat_history", new ServerCommandChatHistory());
+        availableCommands.put("\\chat_list", new ServerCommandChatList());
         availableCommands.put("\\login", new ServerCommandLogin());
         availableCommands.put("\\register", new ServerCommandRegister());
-        availableCommands.put("\\user", new ServerCommandFind());
+        availableCommands.put("\\user", new ServerCommandUser());
         availableCommands.put("\\undefined", new ServerCommandUndefined());
-        availableCommands.put("\\exit", new ServerCommandFind());
+        availableCommands.put("\\exit", new ServerCommandExit());
+        availableCommands.put("\\chat_create", new ServerCommandChatCreate());
+        availableCommands.put("\\user_info", new ServerCommandUserInfo());
+        availableCommands.put("\\user_pass", new ServerCommandUserPass());
     }
 
     private static ServerBaseCommand getCommand(String commandName) {

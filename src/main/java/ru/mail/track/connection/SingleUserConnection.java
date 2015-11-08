@@ -1,10 +1,12 @@
 package ru.mail.track.connection;
 
+import ru.mail.track.ThreadedServer;
 import ru.mail.track.comands.CommandsData;
 import ru.mail.track.comands.ServerBaseCommand;
 import ru.mail.track.comands.ServerCommandsDecoder;
 import ru.mail.track.control.ActiveConnections;
 import ru.mail.track.control.Dialogs;
+import ru.mail.track.storage.ControlMessage;
 import ru.mail.track.storage.Message;
 import ru.mail.track.storage.MessageStorage;
 
@@ -19,13 +21,20 @@ public class SingleUserConnection implements MessageListener {
     private ActiveConnections activeConnections = null;
     private MessageStorage messageStorage = null;
     private Logger LOGGER;
-    public SingleUserConnection(ConnectionHandler connectionHandler, Dialogs dialogs, ActiveConnections activeConnections, MessageStorage messageStorage, long connectionId, Logger LOGGER) {
+
+    public ThreadedServer getThreadedServer() {
+        return threadedServer;
+    }
+
+    private ThreadedServer threadedServer = null;
+    public SingleUserConnection(ConnectionHandler connectionHandler, ThreadedServer threadedServer, Dialogs dialogs, ActiveConnections activeConnections, MessageStorage messageStorage, long connectionId, Logger LOGGER) {
         this.dialogs = dialogs;
         this.activeConnections = activeConnections;
         this.messageStorage = messageStorage;
         this.connectionHandler = connectionHandler;
         this.LOGGER = LOGGER;
         this.connectionId = connectionId;
+        this.threadedServer = threadedServer;
         connectionHandler.addListener(this);
         activeConnections.addToUnlogined(connectionId, this);
         Thread thread = new Thread(connectionHandler);
@@ -54,11 +63,23 @@ public class SingleUserConnection implements MessageListener {
             if (object instanceof Message) {
                 Message msg = (Message) object;
                 LOGGER.info("got message: " + msg.getText());
-                dialogs.putMessageToDialog(msg);
+                if ( userId !=0) {
+                    msg.setSenderId(userId);
+                    dialogs.putMessageToDialog(msg);
+                }
             } else if (object instanceof CommandsData) {
                 CommandsData cmdData = (CommandsData) object;
                 ServerBaseCommand cmd = ServerCommandsDecoder.getCommand(cmdData);
                 cmd.perform(this, cmdData);
+            } else if (object instanceof ControlMessage) {
+                ControlMessage msg = (ControlMessage) object;
+                if ( msg.status == msg.LASTMESSAGE){
+                    if ( getUserId()==0){
+                        activeConnections.deleteFromLogined(getUserId());
+                    }else {
+                        activeConnections.deleteFromUnlogined(connectionId);
+                    }
+                }
             }
         } catch (Exception e) {
             e.printStackTrace();

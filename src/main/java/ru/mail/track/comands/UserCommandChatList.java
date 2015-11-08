@@ -1,11 +1,10 @@
 package ru.mail.track.comands;
 
 import ru.mail.track.connection.ConnectionHandler;
-import ru.mail.track.storage.Message;
 
 import java.io.IOException;
 
-public class UserCommandFind implements UserBaseCommand {
+public class UserCommandChatList implements UserBaseCommand {
     @Override
     public Result perform(ConnectionHandler connectionHandler, CommandsData command) {
         try {
@@ -17,6 +16,6 @@ public class UserCommandFind implements UserBaseCommand {
     }
 
     public String getDescription() {
-        return "find messages in history using regex";
+        return "list all chats of this user usage \\chat_list";
     }
 }

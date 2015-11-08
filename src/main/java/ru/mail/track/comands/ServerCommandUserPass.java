@@ -5,7 +5,7 @@ import ru.mail.track.control.InfoMessage;
 import ru.mail.track.storage.User;
 import ru.mail.track.storage.UserStore;
 
-public class ServerCommandUser implements ServerBaseCommand {
+public class ServerCommandUserPass implements ServerBaseCommand {
     @Override
     public Result perform(SingleUserConnection connection, CommandsData command) {
         try {
@@ -14,12 +14,15 @@ public class ServerCommandUser implements ServerBaseCommand {
                 return null;
             }
             String[] arguments = command.getText().split(" ");
-            if (arguments.length == 2) {
+            if (arguments.length == 3) {
 
-                connection.getConnectionHandler().send(new InfoMessage("Nick name changing..."));
+                connection.getConnectionHandler().send(new InfoMessage("Password changing..."));
                 UserStore userStorage = connection.getThreadedServer().getUserStore();
                 User user = userStorage.getUserWithId(connection.getUserId());
-                user.setNickName(arguments[1]);
+                if (!user.getPass().equals(arguments[1])) {
+                    return null;
+                }
+                user.setPass(arguments[2]);
                 userStorage.update(user);
 
             }

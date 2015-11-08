@@ -4,7 +4,7 @@ import java.io.Serializable;
 
 public class Message implements Serializable {
     private String text;
-    private Long userId;
+    private Long senderId;
     private Long dialogId;
     private long timestamp = System.currentTimeMillis() / 1000L;
 
@@ -12,12 +12,12 @@ public class Message implements Serializable {
         this.text = text;
     }
 
-    public Long getUserId() {
-        return userId;
+    public Long getSenderId() {
+        return senderId;
     }
 
-    public void setUserId(Long userId) {
-        this.userId = userId;
+    public void setSenderId(Long senderId) {
+        this.senderId = senderId;
     }
 
     public Long getDialogId() {

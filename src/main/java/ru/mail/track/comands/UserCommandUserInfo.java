@@ -1,25 +1,21 @@
 package ru.mail.track.comands;
 
 import ru.mail.track.connection.ConnectionHandler;
-import ru.mail.track.storage.Message;
 
 import java.io.IOException;
 
-import static java.lang.Integer.parseInt;
-
-public class UserCommandHistory implements UserBaseCommand {
-
+public class UserCommandUserInfo implements UserBaseCommand {
     @Override
     public Result perform(ConnectionHandler connectionHandler, CommandsData command) {
         try {
-                connectionHandler.send(command);
+            connectionHandler.send(command);
         } catch (IOException e) {
-                e.printStackTrace();
+            e.printStackTrace();
         }
         return null;
     }
 
     public String getDescription() {
-        return "return last messages [count]";
+        return "get info about user usage \\user_info [userId]";
     }
 }
