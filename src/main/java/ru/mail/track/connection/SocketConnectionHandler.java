@@ -1,5 +1,6 @@
 package ru.mail.track.connection;
 
+import ru.mail.track.protocol.ObjectBytesConverter;
 import ru.mail.track.storage.ControlMessage;
 
 import java.io.*;
@@ -34,9 +35,7 @@ public class SocketConnectionHandler implements ConnectionHandler {
     @Override
     public void send(Serializable object) throws IOException {
         LOGGER.info("Sending message");
-        ByteArrayOutputStream serializatorBAIS = new ByteArrayOutputStream();
-        (new ObjectOutputStream(serializatorBAIS)).writeObject(object);
-        byte[] bytesArray = serializatorBAIS.toByteArray();
+        byte[] bytesArray = ObjectBytesConverter.toBytes(object);
         out.writeInt(bytesArray.length);
         out.write(bytesArray);
         /*out.writeObject(object);*/
@@ -70,9 +69,7 @@ public class SocketConnectionHandler implements ConnectionHandler {
                 while (read < shouldBeRead) {
                     read += in.read(buf, read, shouldBeRead - read);
                 }
-                ByteArrayInputStream diserializatorBAIS = new ByteArrayInputStream(buf);
-                ObjectInput disearilizatorOI = new ObjectInputStream(diserializatorBAIS);
-                notifyListeners((Serializable) disearilizatorOI.readObject());
+                notifyListeners(ObjectBytesConverter.toObject(buf));
 /*                Object obj = in.readObject();
                 notifyListeners((Serializable) obj);*/
             } catch (EOFException e) {

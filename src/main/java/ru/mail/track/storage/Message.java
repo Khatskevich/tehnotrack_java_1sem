@@ -43,4 +43,23 @@ public class Message implements Serializable {
     public void setTimestamp(long timestamp) {
         this.timestamp = timestamp;
     }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (obj == null) {
+            return false;
+        }
+        if (getClass() != obj.getClass()) {
+            return false;
+        }
+        final Message other = (Message) obj;
+        if (!this.getText().equals(other.getText())
+                || !this.getDialogId().equals(other.getDialogId())
+                || !this.getSenderId().equals(other.getSenderId())
+                || !(this.getTimestamp() == other.getTimestamp())
+                ) {
+            return false;
+        }
+        return true;
+    }
 }
