@@ -4,20 +4,17 @@ import ru.mail.track.storage.Message;
 import ru.mail.track.session.Session;
 import ru.mail.track.storage.User;
 import ru.mail.track.storage.UserStore;
-import ru.mail.track.storage.UserStoreStatic;
+import ru.mail.track.storage.UserStoreLocal;
 
 import java.io.PrintStream;
 import java.util.Scanner;
 
 import static java.lang.Integer.parseInt;
 
-/**
- * Created by lesaha on 16.10.15.
- */
 public class CommandLogin implements Command {
     @Override
     public Result perform(Session session, Message msg) {
-        if (session==null){
+        if (session == null) {
             return null;
         }
         Scanner in = session.getStdIn();
@@ -28,12 +25,12 @@ public class CommandLogin implements Command {
             User user = new User(arguments[1], arguments[2]);
             try {
                 session.startSession(user);
-            }catch (Exception e){
+            } catch (Exception e) {
                 out.println("Can not log in." + e.getMessage());
             }
-        } else if (arguments.length == 1){ // registration
+        } else if (arguments.length == 1) { // registration
             out.println("Registration...");
-            UserStore userStorage = new UserStoreStatic();
+            UserStore userStorage = new UserStoreLocal();
             out.println("Enter your name please:");
             String name = in.nextLine();
             out.println("Enter your password please:");
@@ -42,15 +39,16 @@ public class CommandLogin implements Command {
             try {
                 userStorage.addUser(user);
                 out.println("Success!  Now you can log in");
-                out.println("Username = "+ name);
-                out.println("Password = "+ password);
-            }catch (Exception e){
+                out.println("Username = " + name);
+                out.println("Password = " + password);
+            } catch (Exception e) {
                 out.println("Can not create user. " + e.getMessage());
             }
         }
         return null;
     }
-    public String getDescription(){
+
+    public String getDescription() {
         return "press \\login <username> <password> to log in and \\login to register";
     }
 }

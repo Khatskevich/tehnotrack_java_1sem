@@ -8,22 +8,18 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Scanner;
 
-/**
- * Created by lesaha on 16.10.15.
- */
-public class LocalSession implements Session{
-    //FIXME(arhangeldim): модификаторы доступа
-    Map<String, Command> availableCommands;
+public class LocalSession implements Session {
+    private Map<String, Command> availableCommands;
     private MessageStorage messageStorage = new MessageStorageLocal();
     private User user = null;
-    PrintStream out = System.out;
-    Scanner in = new Scanner(System.in);
+    public PrintStream out = System.out;
+    public Scanner in = new Scanner(System.in);
 
     public Map<String, Command> getAvailableCommands() {
         return availableCommands;
     }
 
-    public LocalSession(){
+    public LocalSession() {
 
         availableCommands = new HashMap<>();
         availableCommands.put("\\find", new CommandFind());
@@ -32,8 +28,10 @@ public class LocalSession implements Session{
         availableCommands.put("\\login", new CommandLogin());
         availableCommands.put("\\user", new CommandUser());
         availableCommands.put("\\undefined", new CommandUndefined());
+        availableCommands.put("\\exit", new CommandExit());
 
     }
+
     @Override
     public MessageStorage getMessageStorage() {
         return messageStorage;
@@ -41,52 +39,57 @@ public class LocalSession implements Session{
 
     @Override
     public void startSession(User user) throws Exception {
-        if ( user == null){
+        if (user == null) {
             throw new Exception("user == null!");
         }
-        this.user = new UserStoreStatic().getUser(user);
-        if ( this.user == null ){
+        this.user = new UserStoreLocal().getUser(user);
+        if (this.user == null) {
             throw new Exception("Can not start session with that user!");
         }
     }
 
     @Override
-    public User getUser(){
+    public void stopSession() {
+        this.user = null;
+    }
+
+    @Override
+    public User getUser() {
         return user;
     }
 
     @Override
-    public PrintStream getStdOut(){
+    public PrintStream getStdOut() {
         return out;
     }
 
     @Override
-    public Scanner getStdIn(){
+    public Scanner getStdIn() {
         return in;
     }
 
     @Override
-    public boolean isValid() {
-        return user!=null;
+    public boolean isLogined() {
+        return user != null;
     }
 
     private boolean isItCommand(Message msg) {
         return msg.getText().startsWith("\\");
     }
 
-    private Command getCommand(String commandName){
-        if (availableCommands.containsKey( commandName )){
-            return  availableCommands.get( commandName);
+    private Command getCommand(String commandName) {
+        if (availableCommands.containsKey(commandName)) {
+            return availableCommands.get(commandName);
         }
         return availableCommands.get("\\undefined");
     }
 
     @Override
-    public void processInput(Message msg) {
+    public Result processInput(Message msg) {
         if (isItCommand(msg)) {
-            getCommand(msg.getText().split(" ")[0]).perform(this, msg);
+            return getCommand(msg.getText().split(" ")[0]).perform(this, msg);
         } else {
-            new SendMessage().perform(this, msg);
+            return new SendMessage().perform(this, msg);
         }
     }
 

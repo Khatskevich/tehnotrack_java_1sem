@@ -6,13 +6,10 @@ import ru.mail.track.session.Session;
 import java.io.PrintStream;
 import java.util.Scanner;
 
-/**
- * Created by lesaha on 16.10.15.
- */
 public class CommandFind implements Command {
     @Override
-    public Result perform(Session session, Message msg){
-        if (!session.isValid()){
+    public Result perform(Session session, Message msg) {
+        if (!session.isLogined()) {
             return null;
         }
         Scanner in = session.getStdIn();
@@ -22,15 +19,18 @@ public class CommandFind implements Command {
         out.println("Looking for " + "\"" + regex + "\"");
         try {
             for (Message message : session.getMessageStorage().getLastMessagesWithRegex(number, regex)) {
-                out.println(message.getTimestamp() +":"+ message.getText());
+                out.println(message.getTimestamp() + ":" + message.getText());
             }
         } catch (Exception e) {
             //FIXME(arhangeldim): ну в логи вы написали, а пользователю что делать?
+            // session.getStdOut(); - по моей идее - возвращает поток, который выводит сообщения пользователю.
+            // Наверное лучше его переименовать?
             out.println("Error ocured during performing command.");
         }
         return null;
     }
-    public String getDescription(){
+
+    public String getDescription() {
         return "find messages in history using regex";
     }
 }

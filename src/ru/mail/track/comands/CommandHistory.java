@@ -8,20 +8,21 @@ import java.util.Scanner;
 
 import static java.lang.Integer.parseInt;
 
-/**
- * Created by lesaha on 16.10.15.
- */
 public class CommandHistory implements Command {
 
     @Override
     public Result perform(Session session, Message msg) {
-        if (!session.isValid()){
+        if (!session.isLogined()) {
             return null;
         }
         Scanner in = session.getStdIn();
         PrintStream out = session.getStdOut();
         //FIXME(arhangeldim): Как-то по смыслу странно получается, вроде это сообщение, а вы его как команду
         // обрабатываете
+        // Мне кажется, что так достигается максимальная прозрачность кода.
+        // К тому же sendMessage так же как и все по логике должно проходить через сессию
+        // ( проверка авторизации, работа по сети, получение результата)
+        // и поэтому я решил сделать один жизненный цикл для всего подобного.
         String[] arguments = msg.getText().split(" ");
         int number = Integer.MAX_VALUE;
         if (arguments.length > 1) {
@@ -36,7 +37,8 @@ public class CommandHistory implements Command {
         }
         return null;
     }
-    public String getDescription(){
+
+    public String getDescription() {
         return "return last messages [count]";
     }
 }
