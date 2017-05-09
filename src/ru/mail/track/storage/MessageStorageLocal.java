@@ -1,40 +1,36 @@
 package ru.mail.track.storage;
 
-import java.util.Iterator;
+import java.util.ArrayList;
+import java.util.Collections;
 import java.util.LinkedList;
 
-//FIXME(arhangeldim): комент лишний
-/**
- * Created by lesah_000 on 10/13/2015.
- */
 public class MessageStorageLocal implements MessageStorage {
-    //FIXME(arhangeldim): модификатор доступа
-    LinkedList<Message> messages = new LinkedList<>();
+    //Здесь линкед лист - для безопастной и более быстрой работы с итераторами при поиске с конца.
+    //Если появятся другие команды ( не история и поиск) - то возможно придется менять.
+    private LinkedList<Message> messages = new LinkedList<>();
 
     @Override
-    public LinkedList<Message> getLastMessagesWithRegex(int num, String regex) throws Exception {
-        //FIXME(arhangeldim): поле не используется
-        int count = num < messages.size() ? num : messages.size();
+    public ArrayList<Message> getLastMessagesWithRegex(int num, String regex) throws Exception {
 
-        //FIXME(arhangeldim): слева должен быть интерфейс List<Message>
-        //FIXME(arhangeldim): неправильное имя, используйте camelCase именование, а не under_score
-        // Почему выбран LinkedList?
-        // и лучше назвать осмысленно, например resultMessages
-        LinkedList<Message> messages_temp = new LinkedList<>();
+        ArrayList<Message> resultMessages = new ArrayList<>();
         for (Message tmpMsg : messages) {
             //FIXME(arhangeldim): лучше на null проверить перед циклом
+            // не хочется дублировать код
+            // regex = null значит, что нам подходит любой патерн, остальная логика - такая же.
             if (regex == null || tmpMsg.getText().matches(regex)) {
-                messages_temp.addFirst(tmpMsg);
+                resultMessages.add(tmpMsg);
             }
-            if (messages_temp.size() == num) {
-                return messages_temp;
+            if (resultMessages.size() == num) {
+                Collections.reverse(resultMessages);
+                return resultMessages;
             }
         }
-        return messages_temp;
+        Collections.reverse(resultMessages);
+        return resultMessages;
     }
 
     @Override
-    public void setNewMessage(Message msg) {
+    public void addMessage(Message msg) {
         messages.addFirst(msg);
     }
 }

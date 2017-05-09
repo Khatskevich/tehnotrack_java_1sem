@@ -1,7 +1,21 @@
 package ru.mail.track.comands;
 
-/**
- * Created by lesaha on 16.10.15.
- */
-public interface Result {
+public class Result {
+    public enum Status {
+        Sending,
+        WaitingForSend,
+        Error,
+        Sent,
+        LastMessage
+    }
+
+    public Status getStatus() {
+        return status;
+    }
+
+    public void setStatus(Status status) {
+        this.status = status;
+    }
+
+    private Status status;
 }
